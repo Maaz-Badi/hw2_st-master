@@ -9,8 +9,7 @@ def create_VideoHistory(VideoRecords):
     for i in VideoRecords:
         key = i["Video_ID"]
         data = {i['Video_URL'],i['Views'],i['Likes'],i['Dislikes']}
-        put(H,key,data,len(H))
-
+        put(H,key,data,size)
     return H
 
         

@@ -15,8 +15,12 @@ def search_warehouse(graph, wh):
     """
 
     # WRITE YOUR CODE HERE
-    pass
+    Warehouse = None
+    for i in graph:
+        if i[0] == wh:
+            Warehouse = True
 
+    return Warehouse
 def add_supply_link(graph, warehouse_o, warehouse_i, weight):
     """
     Adds or updates a supply link between two warehouses in the supply chain graph.
@@ -52,7 +56,37 @@ def add_supply_link(graph, warehouse_o, warehouse_i, weight):
     """
 
     # WRITE YOUR CODE HERE
-    pass
+    wo = search_warehouse(graph,warehouse_o)
+    wi = search_warehouse(graph,warehouse_i)
+    if wo == None:
+        print (warehouse_o + "is not in the supply chain")
+        return
+    elif wi == None:
+        print(wi + " is not in the supply chain")
+        return
+
+    Warehouse = None
+    for i in graph:
+        if i[0] == warehouse_o:
+            Warehouse = i
+            break
+    
+    print(graph[Warehouse])
+    con = is_connected(graph,warehouse_o,warehouse_i)
+    if con == True:
+        for i in graph[Warehouse]:
+            if i[0] == warehouse_i:
+                p= list(i)
+                p[1] = weight
+                i = tuple(p)
+        print('Supply link updated successfully')
+    else:
+        q = (warehouse_i,weight)
+        graph[Warehouse].append(q)
+        print('Supply link added successfully')
+        
+    print(graph[Warehouse])
+    
     
 
 def main():
@@ -74,6 +108,6 @@ def main():
     Expected Output:
     W24 is not in the supply chain
     """
-    
+
 if __name__ == "__main__":
     main()

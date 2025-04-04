@@ -48,12 +48,13 @@ def resize_hashtable(hashtable,size,increase):
     if p <7:
         return hashtable
     new_hash = create_hashtable(p)
-    for i in range(size):
-        new_hash[i] == hashtable[i]
+    for i in hashtable:
+        key = i["ID"]
+        data = i["DATA"]
+        if key != None and key != '#':
+            put(new_hash,key,data,p)
 
-    hashtable = new_hash
-
-    return (hashtable,p)
+    return(new_hash,p)
 
 """
 #Takes Key and size as parameters
@@ -93,16 +94,24 @@ def put(hashtable,key, data,size):
     if hashtable[address]["ID"] == None:
         hashtable[address]["ID"] = key
         hashtable[address]['DATA'] = data
-    # else:
-        # newaddress = collision_resolver(key, address,size)
-        # put(hashtable,key,data,size)
+    else:
+        newaddress = address
+        while hashtable[newaddress]["ID"] != None:
+            newaddress = collision_resolver(key,newaddress,size)
+        hashtable[newaddress]["ID"] = key
+        hashtable[newaddress]["DATA"] = data
 
-
-        
-
+    loadfactor = loadFactor(hashtable,size)
+    if loadfactor > 0.75:
+        R = resize_hashtable(hashtable,size,True)
+        hashtable = R[0]
+    elif loadfactor<0.30:
+        R = resize_hashtable(hashtable,size,False)
+        hashtable = R[0]
     
 
-  
+
+
 """
 #Takes hashtable and size as parameters 
 # Returns load factor of type float   
@@ -110,10 +119,10 @@ def put(hashtable,key, data,size):
 def loadFactor(hashtable,size):
     count = 0
     for i in hashtable:
-        if (type(i) == dict) or (i == "#"):
+        if i["ID"]!= None and i["ID"]!="#":
             count += 1
     
-    return ((count/len(hashtable)*100))
+    return ((count/len(hashtable)))
 
 """
 #Takes in hash table, key, Name of the Column to be updated, 

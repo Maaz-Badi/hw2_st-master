@@ -23,6 +23,25 @@ def get_cheapest_outgoing_supply_route(graph, wh):
         if i[0] == wh:
             warehouse = i
             break
+    if warehouse == None:
+        return None
+    if graph[warehouse] == []:
+        return None
+    minimum = 10000000
+    edge = None
+    for i in graph[warehouse]:
+        a,b =  i
+        t,c,m = b
+        # print (c)
+        if c < minimum:
+            minimum = c
+            edge = i
+
+        
+    return(wh,edge[0])
+
+
+
     
     
     
@@ -45,7 +64,33 @@ def get_cheapest_incoming_supply_route(graph, wh):
     """
 
     # WRITE YOUR CODE HERE
-    pass
+    warehouse = None
+    for i in graph:
+        if i[0] == wh:
+            warehouse = i
+            break
+    if warehouse == None:
+        return None
+    P = []
+    for i in graph:
+        for j in graph[i]:
+            if j[0] == wh:
+                P.append((j,i))
+    # print(P)
+    minimum = 10000000
+    edge = None
+    for i in P:
+        a,b = i
+        q,w = a
+        t,c,m = w
+        if c<minimum:
+            minimum = c
+            edge = b[0]
+    
+    if edge == None:
+        return edge
+    return(edge,wh)
+    
 
 def get_expensive_outgoing_supply_route(graph, wh):
     """
@@ -65,7 +110,23 @@ def get_expensive_outgoing_supply_route(graph, wh):
     """
 
     # WRITE YOUR CODE HERE
-    pass
+    warehouse = None
+    for i in graph:
+        if i[0] == wh:
+            warehouse = i
+            break
+    if warehouse == None:
+        return None
+    max = 0
+    edge = None
+    for i in graph[warehouse]:
+        a , b =  i
+        t,c,m = b
+        if c > max:
+            max = c
+            edge = i
+        
+    return(wh,edge[0])
             
 def get_expensive_incoming_supply_route(graph, wh):
     """
@@ -85,7 +146,32 @@ def get_expensive_incoming_supply_route(graph, wh):
     """
 
     # WRITE YOUR CODE HERE
-    pass
+    warehouse = None
+    for i in graph:
+        if i[0] == wh:
+            warehouse = i
+            break
+    if warehouse == None:
+        return None    
+    P = []
+    for i in graph:
+        for j in graph[i]:
+            if j[0] == wh:
+                P.append((j,i))
+    # print(P)
+    max = 0
+    edge = None
+    for i in P:
+        a,b = i
+        q,w = a
+        t,c,m = w
+        if c>max:
+            max = c
+            edge = b[0]
+    
+    if edge == None:
+        return edge
+    return(edge,wh)
     
 
 def main():
