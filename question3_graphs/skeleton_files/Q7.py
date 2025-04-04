@@ -37,7 +37,6 @@ def add_warehouse(graph, warehouse_o, tr_trust, warehouse_i, weight):
 
    # WRITE YOUR CODE HERE
    pass
-
 def main():
     G = create_supply_chain('supply_chain.csv')
     add_warehouse(G, "W21", 100.0, "W1", (3, 129.96, "Ground"))
