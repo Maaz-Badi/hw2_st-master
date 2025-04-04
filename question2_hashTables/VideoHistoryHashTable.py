@@ -48,11 +48,22 @@ def resize_hashtable(hashtable,size,increase):
     if p <7:
         return hashtable
     new_hash = create_hashtable(p)
+    new_size = len(new_hash)
     for i in hashtable:
         key = i["ID"]
         data = i["DATA"]
         if key != None and key != '#':
-            put(new_hash,key,data,p)
+            address = hash_function(key,new_size)
+            if new_hash[address]["ID"] == None:
+                new_hash[address]["ID"] = key
+                new_hash[address]['DATA'] = data
+            else:
+                newaddress = address
+                while new_hash[newaddress]["ID"] != None:
+                    newaddress = collision_resolver(key,newaddress,new_size)
+                hashtable[newaddress]["ID"] = key
+                hashtable[newaddress]["DATA"] = data
+
 
     return(new_hash,p)
 

@@ -4,7 +4,6 @@ import csv
 # Returns HashTable in the Format [{'ID':..,"DATA":{}}]
 def create_VideoHistory(VideoRecords):
     size=7
-    updated_size = 0
     H = create_hashtable(size)
     for i in VideoRecords:
         key = i["Video_ID"]
@@ -55,7 +54,7 @@ def main(filename):
 
 # Driver Code
 VideoRecords=main('watchedVideos.csv')
-# print(VideoRecords)
+print(VideoRecords)
 H=create_VideoHistory(VideoRecords)
 print(H)
 print(perform_Operations(H,'Operations1.csv'))

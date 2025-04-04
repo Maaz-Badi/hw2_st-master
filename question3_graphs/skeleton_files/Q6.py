@@ -74,11 +74,12 @@ def add_supply_link(graph, warehouse_o, warehouse_i, weight):
     print(graph[Warehouse])
     con = is_connected(graph,warehouse_o,warehouse_i)
     if con == True:
+        count = 0
         for i in graph[Warehouse]:
             if i[0] == warehouse_i:
-                p= list(i)
-                p[1] = weight
-                i = tuple(p)
+                graph[Warehouse][count] = (warehouse_i,weight)
+                break
+            count +=1
         print('Supply link updated successfully')
     else:
         q = (warehouse_i,weight)
