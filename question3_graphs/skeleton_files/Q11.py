@@ -17,7 +17,25 @@ def calculate_average(graph, warehouse, option):
     Returns:
     float: The average shipment time or cost for the given warehouse.
     """
-    pass
+    Warehouse = None
+    for i in graph:
+        if i[0] == warehouse:
+            Warehouse = i
+            break
+    count = 0
+    totaltime  = 0
+    totalcost = 0
+    for i in graph[Warehouse]:
+        a,b = i
+        t,c,m = b
+        totaltime += t
+        totalcost += c
+        count += 1
+
+    if option == "time":
+        return (totaltime/count)
+    elif option == "cost":
+        return (totalcost/count)
 
 
 def find_bottlenecks(graph, threshold, option):
@@ -36,7 +54,20 @@ def find_bottlenecks(graph, threshold, option):
     list: A list of warehouse IDs that are causing bottlenecks.
     Returns an empty list if no bottleneck found
     """
-    pass
+    d = []
+    for i in graph:
+        if option == "time":
+            key = i[0]
+            q = calculate_average(graph,key,"time")
+            if q>threshold:
+                d.append(key)
+        elif option == "cost":
+            key = i[0]
+            q = calculate_average(graph,key,"cost")
+            if q>threshold:
+                d.append(key)
+    return d
+                
 
 def main():
     G = create_supply_chain('supply_chain.csv')
