@@ -2,7 +2,7 @@ from Q8 import *
 
 
 def remove_warehouse(graph, warehouse):
-     """
+    """
     Removes a warehouses from the supply chain graph, along with its connected supply links.
 
     If the specified warehouse does not exist in the graph, the function prints an error message. 

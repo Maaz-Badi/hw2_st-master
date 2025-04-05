@@ -2,7 +2,7 @@ from Q7 import *
 
 
 def remove_supply_link(graph, warehouse_o, warehouse_i):
-     """
+    """
     Removes a supply link between two warehouses in the supply chain graph.
 
     If the specified origin or destination warehouse does not exist in the graph, 
@@ -34,8 +34,41 @@ def remove_supply_link(graph, warehouse_o, warehouse_i):
     W24 is not in the supply chain
     """
 
-     # WRITE YOUR CODE HERE
-    # pass
+    # WRITE YOUR CODE HERE
+    wo = search_warehouse(graph,warehouse_o)
+    wi = search_warehouse(graph,warehouse_i)
+    if wo == False:
+        print(f'{warehouse_o} is not in the supply chain')
+        return
+    elif wi == False:
+        print(f'f{warehouse_i} is not in the supply chain')
+        return
+     
+    con = is_connected(graph, warehouse_o, warehouse_i)
+    if con  == False:
+        print(f'{warehouse_i} is not connected to {warehouse_o}')
+        return
+    
+    warehouse = None
+    for i in graph:
+        if i[0] == warehouse_o:
+            warehouse = i
+            break
+
+
+    edge = None
+    for i in graph[warehouse]:
+        if i[0] == warehouse_i:
+            edge = i
+            break
+
+    
+    # print(edge) 
+    # print(graph[warehouse]) #! check for correct output values
+    graph[warehouse].remove(edge)
+    print(f'Supply link removed successfully')
+    # print(graph[warehouse])
+
 
     
 
