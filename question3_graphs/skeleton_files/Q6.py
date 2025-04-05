@@ -15,7 +15,7 @@ def search_warehouse(graph, wh):
     """
 
     # WRITE YOUR CODE HERE
-    Warehouse = None
+    Warehouse = False
     for i in graph:
         if i[0] == wh:
             Warehouse = True
@@ -58,10 +58,10 @@ def add_supply_link(graph, warehouse_o, warehouse_i, weight):
     # WRITE YOUR CODE HERE
     wo = search_warehouse(graph,warehouse_o)
     wi = search_warehouse(graph,warehouse_i)
-    if wo == None:
-        print (warehouse_o + "is not in the supply chain")
+    if wo == False:
+        print (warehouse_o + " is not in the supply chain")
         return
-    elif wi == None:
+    elif wi == False:
         print(wi + " is not in the supply chain")
         return
 
@@ -71,7 +71,7 @@ def add_supply_link(graph, warehouse_o, warehouse_i, weight):
             Warehouse = i
             break
     
-    print(graph[Warehouse])
+    # print(graph[Warehouse])
     con = is_connected(graph,warehouse_o,warehouse_i)
     if con == True:
         count = 0
@@ -86,7 +86,7 @@ def add_supply_link(graph, warehouse_o, warehouse_i, weight):
         graph[Warehouse].append(q)
         print('Supply link added successfully')
         
-    print(graph[Warehouse])
+    # print(graph[Warehouse])
     
     
 

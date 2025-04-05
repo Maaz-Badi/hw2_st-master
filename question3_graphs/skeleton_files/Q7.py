@@ -36,7 +36,31 @@ def add_warehouse(graph, warehouse_o, tr_trust, warehouse_i, weight):
     """
 
    # WRITE YOUR CODE HERE
-   pass
+   wo = search_warehouse(graph, warehouse_o)
+   wi = search_warehouse(graph, warehouse_i)
+#    print(wo)
+#    print(wi)
+   if wo == True:
+        print('The warehouse already exists')
+        return
+   elif wi == False:
+      print('The destination warehouse does not exist')
+      return
+   
+   key = [(warehouse_o,tr_trust)]
+   t,c,m = weight
+   edge = [(warehouse_o, warehouse_i, t, c, m)]
+   addVertices(graph,key)
+   addEdges(graph,edge)
+   print('The warehouse was added successfully')
+#    print(graph[key[0]])
+   
+
+    
+    
+
+
+
 def main():
     G = create_supply_chain('supply_chain.csv')
     add_warehouse(G, "W21", 100.0, "W1", (3, 129.96, "Ground"))
