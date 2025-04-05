@@ -19,6 +19,7 @@ def search_warehouse(graph, wh):
     for i in graph:
         if i[0] == wh:
             Warehouse = True
+            break
 
     return Warehouse
 def add_supply_link(graph, warehouse_o, warehouse_i, weight):
