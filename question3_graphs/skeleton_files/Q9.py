@@ -31,12 +31,31 @@ def remove_warehouse(graph, warehouse):
     W24 is not in the supply chain
     """
 
-     # WRITE YOUR CODE HERE
-    pass
+    # WRITE YOUR CODE HERE
+    wh = search_warehouse(graph,warehouse)
+    if wh == False:
+        print(f'{warehouse} is not in the supply chain')
+        return
+    
+    warehouse_o = None
+    for i in graph:
+        if i[0] == warehouse:
+            warehouse_o = i
+            break 
+
+    print(graph[warehouse_o])
+    for i in range(len(graph[warehouse_o])):
+        d = graph[warehouse_o][0]
+        # print(graph[warehouse_o][0])
+        remove_supply_link(graph,warehouse,d[0])
+
+    del graph[warehouse_o]
+    print(f'{warehouse} is successfully removed from the supply chain')
 
 
 def main():
     G = create_supply_chain('supply_chain.csv')
+    add_supply_link(G, "W1", "W5", (2, 50, "Ground"))
     remove_warehouse(G, "W1")
     """
     Expected Output:
