@@ -15,7 +15,13 @@ def total_edges(graph):
     Returns:
     int: The total number of edges in the graph.
     """
-    pass
+    count = 0
+    for i in graph:
+        for j in i:
+            count +=1
+
+    return count
+
 
 def total_vertices(graph):
     """
@@ -32,7 +38,11 @@ def total_vertices(graph):
     int: The total number of vertices in the graph.
 
     """
-    pass
+    count = 0
+    for i in graph:
+        count+=1
+
+    return count
 
 def graph_density(graph):
     """
@@ -54,7 +64,21 @@ def graph_density(graph):
     Returns:
     None: Prints the calculated graph density, and an appropriate message based on it. 
     """
-
+    V = total_vertices(graph)
+    E = total_edges(graph)
+    GD = (2*E)/(V*(V-1))
+    if GD == 0:
+        print(GD)
+        print(f'Disconnected Graph')
+    elif GD == 1:
+        print(GD)
+        print(f"Fully Connected Graph")
+    elif GD >0 and GD <0.5:
+        print(GD)
+        print(f'Relatively Sparse Graph')
+    elif GD >=0.5 and GD <1:
+        print(GD)
+        print(f'Relatively Dense Graph')
 
 def main():
     G = create_supply_chain('supply_chain.csv')
