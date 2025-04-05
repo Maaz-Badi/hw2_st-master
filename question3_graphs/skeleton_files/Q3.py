@@ -66,11 +66,12 @@ def is_connected(graph, warehouse_o, warehouse_i):
     Q = list_of_incident_edges(graph,warehouse_o)
     if warehouse_o == warehouse_i:
         return False
+    con = False
     for i in Q:
         if i[1] == warehouse_i:
-            return True
-        else:
-            return False
+            con = True
+
+    return con
 
 def if_disconnected(graph, warehouse_o, warehouse_i):
     """
@@ -149,6 +150,7 @@ def main():
     G = create_supply_chain('supply_chain.csv')
     f = is_connected(G, "W1", "W11")
     print(f)
+
 
     """
     EXPECTED OUTPUT:
