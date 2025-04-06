@@ -17,7 +17,14 @@ def count_all_supply_chain_connections(graph, warehouse_o, warehouse_i):
     """
 
     # WRITE YOUR CODE HERE
-    pass
+    wo = search_warehouse(graph,warehouse_o)
+    wi = search_warehouse(graph, warehouse_i)
+    if wo == False or wi == False:
+        return None
+    if warehouse_o == warehouse_i:
+        return 0
+
+
     
 
 

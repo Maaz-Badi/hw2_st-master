@@ -14,7 +14,15 @@ def find_best_warehouse(graph):
     Returns:
     tuple: The warehouse with the highest transit trust factor. If the graph is empty, returns -1."
     """
-    pass
+    min = 0
+    ware = None
+    for i in graph:
+        if i[1] > min:
+            min = i[1]
+            ware = i
+    
+    return ware
+
 
 def find_worst_warehouse(graph):
     """
@@ -31,7 +39,14 @@ def find_worst_warehouse(graph):
     tuple: The warehouse with the lowest transit trust factor. If the graph is empty, returns -1.
 
     """
-    pass
+    max = 100000000
+    ware = None
+    for i in graph:
+        if i[1] < max:
+            max = i[1]
+            ware = i
+    
+    return ware
 
 def main():
     G = create_supply_chain('supply_chain.csv')
