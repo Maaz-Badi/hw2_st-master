@@ -41,12 +41,12 @@ def remove_supply_link(graph, warehouse_o, warehouse_i):
         print(f'{warehouse_o} is not in the supply chain')
         return
     elif wi == False:
-        print(f'f{warehouse_i} is not in the supply chain')
+        print(f'{warehouse_i} is not in the supply chain')
         return
      
     con = is_connected(graph, warehouse_o, warehouse_i)
     if con  == False:
-        print(f'{warehouse_i} is not connected to {warehouse_o}')
+        print(f'{warehouse_i} is not linked to {warehouse_o}')
         return
     
     warehouse = None

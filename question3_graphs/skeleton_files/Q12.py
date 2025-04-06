@@ -17,7 +17,7 @@ def total_edges(graph):
     """
     count = 0
     for i in graph:
-        for j in i:
+        for j in graph[i]:
             count +=1
 
     return count
@@ -66,7 +66,7 @@ def graph_density(graph):
     """
     V = total_vertices(graph)
     E = total_edges(graph)
-    GD = (2*E)/(V*(V-1))
+    GD = (E)/(V *(V-1))
     if GD == 0:
         print(GD)
         print(f'Disconnected Graph')

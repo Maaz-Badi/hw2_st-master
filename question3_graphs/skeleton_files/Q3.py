@@ -110,7 +110,7 @@ def if_disconnected(graph, warehouse_o, warehouse_i):
     # WRITE YOUR CODE HERE
     P = is_connected(graph, warehouse_o, warehouse_i)
     if P == False or P == None:
-        return P
+        return None
     Q = False
     for i in graph:
         if i[0] == warehouse_o:

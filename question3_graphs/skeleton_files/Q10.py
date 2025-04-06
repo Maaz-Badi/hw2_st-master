@@ -18,31 +18,32 @@ def count_all_supply_chain_connections(graph, warehouse_o, warehouse_i):
 
     # WRITE YOUR CODE HERE
     wo = search_warehouse(graph,warehouse_o)
-    wi = search_warehouse(graph, warehouse_i)
+    wi = search_warehouse(graph,warehouse_i)
     if wo == False or wi == False:
         return None
-    if warehouse_o == warehouse_i:
+    if warehouse_i == warehouse_o:
         return 0
     
-    stack = [(warehouse_o, set([warehouse_o]))]
-    count = 0
+    count = [0]
+    visited = []
 
-    while stack:
-        current_node_name, visited = stack.pop()
+    def dfs(current):
+        if current == warehouse_i:
+            count[0] += 1
+            return
 
-        if current_node_name == destination_name:
-            count += 1
-            continue
+        visited.append(current)
 
-        for node_key, neighbors in graph.items():
-            if node_key[0] == current_node_name:
-                for (neighbor_name, *_rest) in neighbors:
-                    if neighbor_name not in visited:
-                        stack.append((neighbor_name, visited | {neighbor_name}))
+        for k,v in graph.items():
+            if k[0] == current:
+                for a, b in v:
+                    if a not in visited:
+                        dfs(a)
 
-    return count
+        visited.pop()
 
-    
+    dfs(warehouse_o)
+    return count[0]
 
 
 def main():
