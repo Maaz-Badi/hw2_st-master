@@ -23,7 +23,24 @@ def count_all_supply_chain_connections(graph, warehouse_o, warehouse_i):
         return None
     if warehouse_o == warehouse_i:
         return 0
+    
+    stack = [(warehouse_o, set([warehouse_o]))]
+    count = 0
 
+    while stack:
+        current_node_name, visited = stack.pop()
+
+        if current_node_name == destination_name:
+            count += 1
+            continue
+
+        for node_key, neighbors in graph.items():
+            if node_key[0] == current_node_name:
+                for (neighbor_name, *_rest) in neighbors:
+                    if neighbor_name not in visited:
+                        stack.append((neighbor_name, visited | {neighbor_name}))
+
+    return count
 
     
 

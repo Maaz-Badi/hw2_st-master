@@ -7,8 +7,12 @@ def create_VideoHistory(VideoRecords):
     H = create_hashtable(size)
     for i in VideoRecords:
         key = i["Video_ID"]
-        data = {i['Video_URL'],i['Views'],i['Likes'],i['Dislikes']}
-        put(H,key,data,size)
+        data = {
+            "Video_URL": i["Video_URL"],
+            "Views": i["Views"],
+            "Likes": i["Likes"],
+            "Dislikes": i["Dislikes"]}
+        H,size = put(H,key,data,size)
     return H
 
         
@@ -54,7 +58,7 @@ def main(filename):
 
 # Driver Code
 VideoRecords=main('watchedVideos.csv')
-print(VideoRecords)
+# print(VideoRecords)
 H=create_VideoHistory(VideoRecords)
 print(H)
 print(perform_Operations(H,'Operations1.csv'))
