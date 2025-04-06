@@ -50,11 +50,12 @@ def resize_hashtable(hashtable,size,increase):
     if increase == True:
         n = size*2
     else:
-        n = max(size //2,7)
+        n = size//2 
 
-    if n == 7:
-        return (hashtable,size)
     p = nextprime(n)
+    if p < 7:
+        return (hashtable,size)
+    
 
     new_hash = create_hashtable(p)
     for i in hashtable:
@@ -69,8 +70,8 @@ def resize_hashtable(hashtable,size,increase):
                 newaddress = address
                 while new_hash[newaddress]["ID"] != None:
                     newaddress = collision_resolver(key,newaddress,p)
-                hashtable[newaddress]["ID"] = key
-                hashtable[newaddress]["DATA"] = data
+                new_hash[newaddress]["ID"] = key
+                new_hash[newaddress]["DATA"] = data
 
 
     return(new_hash,p)
@@ -110,19 +111,21 @@ def collision_resolver(key,oldAddress,size):
 """
 def put(hashtable,key, data,size):
     address = hash_function(key, size)
-    if hashtable[address]["ID"] is None or hashtable[address]["ID"] == "#":
-        hashtable[address] = {"ID": key, "DATA": data}
+    if hashtable[address]['ID'] == None:
+        hashtable[address]["ID"] = key
+        hashtable[address]["DATA"] = data
     else:
-        new_address = address
-        while hashtable[new_address]["ID"] not in (None, "#"):
-            new_address = collision_resolver(key, new_address, size)
-        hashtable[new_address] = {"ID": key, "DATA": data}
+        while hashtable[address]["ID"] != None:
+            address = collision_resolver(key,address,size)
+        hashtable[address]["ID"] = key
+        hashtable[address]["DATA"] = data
 
+    
     load_factor = loadFactor(hashtable, size)
     if load_factor > 0.75:
         return resize_hashtable(hashtable, size, True)
     elif load_factor < 0.30:
-        return resize_hashtable(hashtable, size, False)
+        return resize_hashtable(hashtable,size,False)
     else:
         return hashtable, size
     
@@ -148,14 +151,25 @@ def loadFactor(hashtable,size):
 #Returns Nothing
 """
 def Update(hashtable,key, columnName, size,collision_path,opNumber):
-    pass
+    address = hash_function(key,size)
+    collision_path[opNumber] = [address]
 
+    if hashtable[address]["ID"] == key:
+        UpdateAtIndex(hashtable, address, columnName)
+    else:
+        new_address = address
+        while hashtable[new_address]["ID"] != key:
+            new_address = collision_resolver(key, new_address, size)
+            collision_path[opNumber].append(new_address)
+            if hashtable[new_address]["ID"] == None:
+                return
+        UpdateAtIndex(hashtable,new_address,columnName)
 """        
 # Update the Column Name of the hashtable founf at Index
 #Returns Nothing
 """
 def UpdateAtIndex(hashtable,index,columnName):
-  pass
+    hashtable[index]['DATA'][columnName] += 1
     
 """   
 #Takes hash table, key, size , Collision path and Operation Number as parameters
@@ -165,7 +179,19 @@ def UpdateAtIndex(hashtable,index,columnName):
 #If key is not Found return (None,None)
 """
 def get(hashtable,key,size,collision_path,opNumber):
-    pass
+    address = hash_function(key, size)
+    collision_path[opNumber] = [address]
+
+    if hashtable[address]["ID"] == key:
+        return (hashtable[address]["DATA"], address)
+    else:
+        new_address = address
+        while hashtable[new_address]["ID"] != key:
+            new_address = collision_resolver(key, new_address, size)
+            collision_path[opNumber].append(new_address)
+            if hashtable[new_address]["ID"] == None:
+                return (None, None)
+        return (hashtable[new_address]["DATA"], new_address)
 
 
 """
@@ -176,4 +202,29 @@ def get(hashtable,key,size,collision_path,opNumber):
 #Returns the HashTable
 """ 
 def delete(hashtable, key, size,collision_path,opNumber):
-    pass
+    address = hash_function(key,size)
+    collision_path[opNumber].append(address)
+    
+    if hashtable[address]["ID"] == key:
+        hashtable[address]["ID"] = "#"
+        hashtable[address]["DATA"] = "#"
+    else:
+        newaddress = address
+        while hashtable[newaddress]["ID"] != key:
+            newaddress = collision_resolver(key,newaddress,size)
+            collision_path[opNumber].append(newaddress)
+            if hashtable[newaddress]["ID"] == None:
+                return hashtable, size 
+
+        if hashtable[newaddress]["ID"] == key:
+            hashtable[newaddress]["ID"] = "#"
+            hashtable[newaddress]["DATA"] = "#"
+
+
+    load_factor = loadFactor(hashtable, size)
+    if load_factor > 0.75:
+        return resize_hashtable(hashtable, size, True)
+    elif load_factor <0.30:
+        return resize_hashtable(hashtable, size, False)
+    else:
+        return hashtable, size  
